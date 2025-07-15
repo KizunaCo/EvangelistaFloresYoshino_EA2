@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Books - The Book Nook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>The Book Nook 📚</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="books.html" class="active">Order Books</a>
+            <a href="cart.html">Cart</a>
+        </nav>
+        <div class="theme-switcher">
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </header>
+
+    <main>
+        <section id="order-section">
+            <h2>Select a Book to Order</h2>
+            <form id="add-to-cart-form">
+                <label for="book-select">Choose a book:</label>
+                <select name="books" id="book-select">
+                    <option value="">--Please choose an option--</option>
+                </select>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1">
+                <button type="submit">Add to Cart</button>
+            </form>
+            <p id="feedback-message"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 The Book Nook. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

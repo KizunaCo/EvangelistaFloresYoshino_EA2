@@ -1,0 +1,283 @@
+/* --- Color Variables --- */
+:root {
+    --bg-color: #f4f4f9;
+    --section-bg-color: #ffffff;
+    --text-color: #333;
+    --heading-color: #2e3440;
+    --header-bg: #2e3440;
+    --header-text: #eceff4;
+    --nav-link-color: #d8dee9;
+    --nav-hover-bg: #4c566a;
+    --accent-color: #5e81ac;
+    --accent-text: #ffffff;
+    --button-bg: #a3be8c;
+    --button-hover-bg: #8fbcbb;
+    --border-color: #d8dee9;
+    --card-bg-color: #eceff4;
+    --card-text-color: #4c566a;
+    --footer-bg: #e5e9f0;
+    --footer-text: #4c566a;
+}
+
+body.dark-mode {
+    --bg-color: #2e3440;
+    --section-bg-color: #3b4252;
+    --text-color: #d8dee9;
+    --heading-color: #eceff4;
+    --header-bg: #21252b;
+    --header-text: #eceff4;
+    --nav-link-color: #d8dee9;
+    --nav-hover-bg: #4c566a;
+    --accent-color: #88c0d0;
+    --accent-text: #2e3440;
+    --button-bg: #8fbcbb;
+    --button-hover-bg: #a3be8c;
+    --border-color: #4c566a;
+    --card-bg-color: #434c5e;
+    --card-text-color: #d8dee9;
+    --footer-bg: #21252b;
+    --footer-text: #d8dee9;
+}
+
+/* --- General Styles --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+section {
+    background: var(--section-bg-color);
+    margin-bottom: 25px;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
+}
+
+h1, h2, h3 {
+    color: var(--heading-color);
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Header & Navigation --- */
+header {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    color: var(--header-text);
+}
+
+nav a {
+    color: var(--nav-link-color);
+    margin-left: 20px;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+nav a.active, nav a:hover {
+    background-color: var(--nav-hover-bg);
+    color: var(--header-text);
+    text-decoration: none;
+}
+
+/* --- Theme Switcher --- */
+.theme-switcher {
+    margin-left: auto;
+    padding-left: 20px;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+.slider.round {
+    border-radius: 34px;
+}
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+/* --- Home Page: Banner --- */
+.banner {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: var(--accent-color);
+    color: var(--accent-text);
+    border-radius: 8px;
+}
+
+.banner h2 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: var(--accent-text);
+}
+
+/* --- Home Page: Featured Books --- */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+
+.book-card {
+    background: var(--card-bg-color);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Add this rule for the book images */
+.book-card img {
+    width: 100%; /* Make the image fill the width of its container */
+    height: 250px; /* Set a fixed height for consistency */
+    object-fit: cover; /* Crop the image to fit without distortion */
+    border-radius: 4px; /* Slightly round the corners */
+    margin-bottom: 10px; /* Space between image and title */
+}
+
+.book-card h3 {
+    margin-top: 5px; /* Adjust spacing above the title */
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.book-card p {
+    color: var(--card-text-color);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.book-card .price {
+    color: var(--button-bg);
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: block; /* Make price a block element to control its margin */
+    margin-top: 10px;
+}
+
+/* --- Home Page: Developer Info --- */
+.dev-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dev-card img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+/* --- Book & Cart Page --- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+select, input[type="number"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 5px;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: var(--button-bg);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+#feedback-message {
+    color: var(--accent-color);
+}
+
+/* --- Cart Page Specifics --- */
+.cart-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+#cart-summary {
+    border-top: 2px solid var(--heading-color);
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+}
