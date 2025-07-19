@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coffee Shop</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .menu-item, .cart-item { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>☕ Coffee Menu</h1>
+  <div id="menu"></div>
+
+  <h2>🛒 Cart</h2>
+  <div id="cart"></div>
+  <button onclick="placeOrder()">Place Order</button>
+
+  <script>
+    async function loadMenu() {
+      const res = await fetch('/menu');
+      const menu = await res.json();
+      const menuDiv = document.getElementById('menu');
+      menuDiv.innerHTML = '';
+      menu.forEach(item => {
+        menuDiv.innerHTML += `
+          <div class="menu-item">
+            <strong>${item.name}</strong> - \$${item.price}
+            <button onclick="addToCart('${item._id}', 1)">Add to Cart</button>
+          </div>
+        `;
+      });
+    }
+
+    async function addToCart(itemId, quantity) {
+      await fetch('/cart/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, quantity })
+      });
+      loadCart();
+    }
+
+    async function loadCart() {
+      const res = await fetch('/cart');
+      const cart = await res.json();
+      const cartDiv = document.getElementById('cart');
+      cartDiv.innerHTML = '';
+      cart.forEach(item => {
+        cartDiv.innerHTML += `
+          <div class="cart-item">
+            ${item.name} - Qty: ${item.quantity}
+            <button onclick="updateQty('${item.itemId}', ${item.quantity + 1})">+</button>
+            <button onclick="updateQty('${item.itemId}', ${item.quantity - 1})">-</button>
+            <button onclick="removeItem('${item.itemId}')">Remove</button>
+          </div>
+        `;
+      });
+    }
+
+    async function updateQty(itemId, quantity) {
+      if (quantity <= 0) return removeItem(itemId);
+      await fetch('/cart/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, quantity })
+      });
+      loadCart();
+    }
+
+    async function removeItem(itemId) {
+      await fetch('/cart/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId })
+      });
+      loadCart();
+    }
+
+    async function placeOrder() {
+      await fetch('/order', { method: 'POST' });
+      alert('Order placed!');
+      loadCart();
+    }
+
+    loadMenu();
+    loadCart();
+  </script>
+</body>
+</html>
