@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coffee Shop</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    h1 { color: #6b4f4f; }
+    .menu, .cart { margin-bottom: 30px; }
+    .item { margin: 10px 0; padding: 10px; background: #fff; border: 1px solid #ccc; }
+    button { margin-left: 10px; }
+  </style>
+</head>
+<body>
+  <h1>☕ Coffee Shop Menu</h1>
+  <div class="menu" id="menu"></div>
+
+  <h2>🛒 Your Cart</h2>
+  <div class="cart" id="cart"></div>
+  <button onclick="placeOrder()">Place Order</button>
+
+  <script>
+    async function fetchMenu() {
+     const res = await fetch('/menu');
+      const menu = await res.json();
+      const menuDiv = document.getElementById('menu');
+      menuDiv.innerHTML = '';
+      menu.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <strong>${item.name}</strong> - \$${item.price.toFixed(2)}
+          <input type="number" id="qty-${item._id}" value="1" min="1" style="width: 50px;" />
+          <button onclick="addToCart('${item._id}')">Add to Cart</button>
+        `;
+        menuDiv.appendChild(div);
+      });
+    }
+
+    async function fetchCart() {
+      const res = await fetch('/cart');
+      const cart = await res.json();
+      const cartDiv = document.getElementById('cart');
+      cartDiv.innerHTML = '';
+      cart.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <strong>${item.name}</strong> - \$${item.price.toFixed(2)} x ${item.quantity}
+          <input type="number" value="${item.quantity}" min="1" onchange="updateCart('${item.itemId}', this.value)" />
+          <button onclick="removeFromCart('${item.itemId}')">Remove</button>
+        `;
+        cartDiv.appendChild(div);
+      });
+    }
+
+    async function addToCart(itemId) {
+      const qty = parseInt(document.getElementById(`qty-${itemId}`).value);
+      await fetch('/cart/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, quantity: qty })
+      });
+      fetchCart();
+    }
+
+    async function updateCart(itemId, quantity) {
+      await fetch('/cart/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, quantity: parseInt(quantity) })
+      });
+      fetchCart();
+    }
+
+    async function removeFromCart(itemId) {
+      await fetch('/cart/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId })
+      });
+      fetchCart();
+    }
+
+    async function placeOrder() {
+      const res = await fetch('/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const result = await res.json();
+      alert(result.message);
+      fetchCart();
+    }
+
+    fetchMenu();
+    fetchCart();
+  </script>
+</body>
+</html>
