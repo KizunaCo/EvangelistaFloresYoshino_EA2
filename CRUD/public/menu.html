@@ -89,6 +89,9 @@
     .size-select {
       margin: 0.8rem 0;
     }
+    .hotcold-select {
+      margin-bottom: 0.7rem;
+    }
     select {
       padding: 0.3rem;
       border-radius: 6px;
@@ -128,11 +131,9 @@
   </div>
 </header>
 
-
-
 <div class="tabs">
   <button class="tab-button active" data-tab="coffee" onclick="showTab('coffee')">Coffee</button>
-  <button class="tab-button" data-tab="noncoffee" onclick="showTab('noncoffee')">Non-Coffee Hot Drinks</button>
+  <button class="tab-button" data-tab="noncoffee" onclick="showTab('noncoffee')">Non-Coffee Drinks</button>
   <button class="tab-button" data-tab="colddrinks" onclick="showTab('colddrinks')">Cold Drinks</button>
   <button class="tab-button" data-tab="pastries" onclick="showTab('pastries')">Pastries</button>
   <button class="tab-button" data-tab="meals" onclick="showTab('meals')">Meals</button>
@@ -144,6 +145,10 @@
       <img src="https://i.imgur.com/WpL1IuB.jpg" alt="Espresso" />
       <h3>Espresso</h3>
       <p>Strong and bold, classic espresso shot.</p>
+      <div class="hotcold-select">
+        <label><input type="radio" name="hotcold-espresso" value="Hot" checked> Hot</label>
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-espresso" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Single">Single - ₱120</option>
@@ -156,6 +161,10 @@
       <img src="https://i.imgur.com/fbFZTuk.jpg" alt="Cappuccino" />
       <h3>Cappuccino</h3>
       <p>Creamy and frothy with steamed milk foam.</p>
+      <div class="hotcold-select">
+        <label><input type="radio" name="hotcold-cappuccino" value="Hot" checked> Hot</label>
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-cappuccino" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱150</option>
@@ -168,6 +177,10 @@
       <img src="https://i.imgur.com/GIVM2fB.jpg" alt="Spanish Latte" />
       <h3>Spanish Latte</h3>
       <p>Sweetened latte with creamy condensed milk.</p>
+      <div class="hotcold-select">
+        <label><input type="radio" name="hotcold-spanishlatte" value="Hot" checked> Hot</label>
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-spanishlatte" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱160</option>
@@ -180,6 +193,10 @@
       <img src="https://i.imgur.com/OJfAwQk.jpg" alt="Mocha" />
       <h3>Mocha</h3>
       <p>Chocolate-flavored coffee with whipped cream.</p>
+      <div class="hotcold-select">
+        <label><input type="radio" name="hotcold-mocha" value="Hot" checked> Hot</label>
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-mocha" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱165</option>
@@ -197,6 +214,10 @@
       <img src="https://i.imgur.com/WIpiNJe.jpg" alt="Matcha Latte" />
       <h3>Matcha Latte</h3>
       <p>Earthy green tea with steamed milk.</p>
+      <div class="hotcold-select">
+        <label><input type="radio" name="hotcold-matcha" value="Hot" checked> Hot</label>
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-matcha" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱160</option>
@@ -209,6 +230,10 @@
       <img src="https://i.imgur.com/bOMbbQH.jpg" alt="Classic Chocolate" />
       <h3>Classic Chocolate</h3>
       <p>Rich cocoa drink topped with marshmallows.</p>
+      <div class="hotcold-select">
+        <label><input type="radio" name="hotcold-chocolate" value="Hot" checked> Hot</label>
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-chocolate" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱140</option>
@@ -221,6 +246,10 @@
       <img src="https://i.imgur.com/A0TrkxS.jpg" alt="Chai Latte" />
       <h3>Chai Latte</h3>
       <p>Spiced tea blend with steamed milk.</p>
+      <div class="hotcold-select">
+        <label><input type="radio" name="hotcold-chai" value="Hot" checked> Hot</label>
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-chai" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱150</option>
@@ -238,6 +267,10 @@
       <img src="https://i.imgur.com/UbgYgGg.jpg" alt="Iced Latte" />
       <h3>Iced Latte</h3>
       <p>Chilled espresso and milk over ice.</p>
+      <div class="hotcold-select">
+
+       <label style="margin-left:1rem;"><input type="radio" name="hotcold-lemontea" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱150</option>
@@ -250,6 +283,10 @@
       <img src="https://i.imgur.com/wVKtxjd.jpg" alt="Lemon Iced Tea" />
       <h3>Lemon Iced Tea</h3>
       <p>Refreshing citrus-flavored iced tea.</p>
+      <div class="hotcold-select">
+    
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-lemontea" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Regular">Regular - ₱90</option>
@@ -262,6 +299,9 @@
       <img src="https://i.imgur.com/WOrEXDf.jpg" alt="Cookies & Cream Frappe" />
       <h3>Cookies & Cream Frappe</h3>
       <p>Cold and creamy with cookie bits.</p>
+      <div class="hotcold-select">
+        <label style="margin-left:1rem;"><input type="radio" name="hotcold-lemontea" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Medium">Medium - ₱170</option>
@@ -274,6 +314,10 @@
       <img src="https://i.imgur.com/7H9Es6e.jpg" alt="Strawberry Milk" />
       <h3>Strawberry Milk</h3>
       <p>Sweet and fruity cold milk drink.</p>
+      <div class="hotcold-select">
+      
+       <label style="margin-left:1rem;"><input type="radio" name="hotcold-lemontea" value="Cold"> Cold</label>
+      </div>
       <div class="size-select">
         <select class="size-select">
           <option value="Regular">Regular - ₱130</option>
@@ -284,6 +328,8 @@
     </div>
   </div>
 </section>
+
+<!-- Pastries and Meals remain unchanged -->
 
 <section id="pastries" class="menu-section">
   <div class="menu-grid">
@@ -364,6 +410,12 @@
     const card = button.closest('.menu-card');
     const name = card.querySelector('h3').textContent.trim();
     const sizeSelect = card.querySelector('select.size-select');
+    // Get hot/cold option if present
+    let hotcold = null;
+    const hotcoldRadio = card.querySelector('.hotcold-select input[type="radio"]:checked');
+    if (hotcoldRadio) {
+      hotcold = hotcoldRadio.value;
+    }
     let size, price;
     if (sizeSelect) {
       size = sizeSelect.options[sizeSelect.selectedIndex].value;
@@ -387,8 +439,12 @@
 
     let cart = getCart();
 
-    // Check if item with same name and size already exists in cart
-    const existingIndex = cart.findIndex(item => item.name === name && item.size === size);
+    // Check if item with same name, size, and hot/cold already exists in cart
+    const existingIndex = cart.findIndex(item =>
+      item.name === name &&
+      item.size === size &&
+      (item.hotcold === hotcold || (!item.hotcold && !hotcold))
+    );
 
     if (existingIndex !== -1) {
       // Increase quantity
@@ -397,6 +453,7 @@
       // Add new item
       cart.push({
         name,
+        hotcold,
         size,
         price,
         quantity: 1,
@@ -406,7 +463,7 @@
 
     saveCart(cart);
 
-    alert(`${name} (${size}) added to cart!`);
+    alert(`${hotcold ? hotcold + ' ' : ''}${name} (${size}) added to cart!`);
   }
 
   // Attach event listeners to all Add to Cart buttons
