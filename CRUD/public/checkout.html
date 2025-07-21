@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cafetano | Checkout</title>
+  <style>
+    body {
+      background-color: #fdf6f0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      color: #3e2723;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .order-summary {
+      background-color: #fff3e0;
+      padding: 1.5rem;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #ffe0b2;
+    }
+
+    .total-row td {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .thank-you {
+      text-align: center;
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      color: #5d4037;
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      background-color: #3e2723;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #5d4037;
+    }
+
+    .center-btn {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Checkout Summary</h1>
+
+  <div class="order-summary">
+    <table id="checkout-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Size</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filled by JS -->
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="4">Total</td>
+          <td id="checkout-total">₱0</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="thank-you">
+      Thank you for your order! Your food is being prepared 🍽️
+    </div>
+
+    <div class="center-btn">
+      <a href="menu.html" class="back-btn">Back to Menu</a>
+    </div>
+  </div>
+
+  <script>
+    const checkoutTableBody = document.querySelector('#checkout-table tbody');
+    const totalElem = document.getElementById('checkout-total');
+    let cart = [];
+
+    if (localStorage.getItem('cafetanoCart')) {
+      cart = JSON.parse(localStorage.getItem('cafetanoCart'));
+    }
+
+    function renderCheckout() {
+      let total = 0;
+
+      checkoutTableBody.innerHTML = ''; // Clear previous rows if any
+
+      cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.size}</td>
+          <td>${item.quantity}</td>
+          <td>₱${item.price.toFixed(2)}</td>
+          <td>₱${subtotal.toFixed(2)}</td>
+        `;
+        checkoutTableBody.appendChild(tr);
+      });
+
+      totalElem.textContent = `₱${total.toFixed(2)}`;
+    }
+
+    renderCheckout();
+
+    // Clear the cart after rendering the summary
+    localStorage.removeItem('cafetanoCart');
+  </script>
+</body>

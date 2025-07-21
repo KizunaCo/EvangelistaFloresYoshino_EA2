@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cafetano | Cart</title>
+  <style>
+    body {
+      background-color: #fdf6f0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 1.5rem;
+      color: #3e2723;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+    a.back-link {
+      text-decoration: none;
+      color: #3e2723;
+      background-color: #fff3e0;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      border: 1px solid #d7ccc8;
+      font-weight: 600;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      border-bottom: 1px solid #ddd;
+      padding: 0.8rem 1rem;
+      text-align: left;
+    }
+    th {
+      background-color: #fff3e0;
+    }
+    td.quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    button.qty-btn {
+      background-color: #3e2723;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    button.qty-btn:hover {
+      background-color: #5d4037;
+    }
+    select.size-select {
+      padding: 0.3rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
+      width: 120px;
+    }
+    .total-row td {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    button.checkout-btn {
+      background-color: #3e2723;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 700;
+      transition: background-color 0.3s;
+      float: right;
+    }
+    button.checkout-btn:hover {
+      background-color: #5d4037;
+    }
+    .empty-msg {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 3rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Your Cart</h1>
+  <a href="menu.html" class="back-link">← Back to Menu</a>
+</header>
+
+<table id="cart-table">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Cart items inserted here -->
+  </tbody>
+  <tfoot>
+    <tr class="total-row">
+      <td colspan="4">Total</td>
+      <td id="total-price">₱0.00</td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+
+<div id="empty-cart" class="empty-msg" style="display:none;">Your cart is empty.</div>
+
+<button class="checkout-btn" id="checkout-btn" style="display:none;">Checkout</button>
+
+<script>
+  let cart = [];
+
+  // Load cart from localStorage
+  if(localStorage.getItem('cafetanoCart')) {
+    cart = JSON.parse(localStorage.getItem('cafetanoCart'));
+  }
+
+  const cartTableBody = document.querySelector('#cart-table tbody');
+  const totalPriceElem = document.getElementById('total-price');
+  const emptyMsg = document.getElementById('empty-cart');
+  const checkoutBtn = document.getElementById('checkout-btn');
+
+  function saveCart() {
+    localStorage.setItem('cafetanoCart', JSON.stringify(cart));
+  }
+
+  function renderCart() {
+    cartTableBody.innerHTML = '';
+
+    if (cart.length === 0) {
+      document.querySelector('table').style.display = 'none';
+      emptyMsg.style.display = 'block';
+      checkoutBtn.style.display = 'none';
+      totalPriceElem.textContent = '₱0.00';
+      return;
+    }
+
+    document.querySelector('table').style.display = 'table';
+    emptyMsg.style.display = 'none';
+    checkoutBtn.style.display = 'inline-block';
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const subtotal = item.price * item.quantity;
+      total += subtotal;
+
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td>${item.name}</td>
+        <td>
+          <select class="size-select" onchange="changeSize(${index}, this.value)">
+            ${item.availableSizes.map(sizeObj => 
+              `<option value="${sizeObj.size}" data-price="${sizeObj.price}" ${sizeObj.size === item.size ? 'selected' : ''}>
+                ${sizeObj.size} - ₱${sizeObj.price.toFixed(2)}
+              </option>`).join('')}
+          </select>
+        </td>
+        <td>₱${item.price.toFixed(2)}</td>
+        <td class="quantity-controls">
+          <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+          <span>${item.quantity}</span>
+          <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+        </td>
+        <td>₱${subtotal.toFixed(2)}</td>
+        <td><button class="qty-btn" style="background:#b71c1c;" onclick="removeItem(${index})">×</button></td>
+      `;
+
+      cartTableBody.appendChild(tr);
+    });
+
+    totalPriceElem.textContent = `₱${total.toFixed(2)}`;
+  }
+
+  function changeQty(index, delta) {
+    cart[index].quantity += delta;
+    if (cart[index].quantity < 1) cart[index].quantity = 1;
+    saveCart();
+    renderCart();
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    saveCart();
+    renderCart();
+  }
+
+  function changeSize(index, newSize) {
+    const item = cart[index];
+    const sizeObj = item.availableSizes.find(s => s.size === newSize);
+    if (sizeObj) {
+      item.size = sizeObj.size;
+      item.price = sizeObj.price;
+      saveCart();
+      renderCart();
+    }
+  }
+    // ...existing code...
+  checkoutBtn.addEventListener('click', () => {
+    // Redirect to checkout page (do NOT clear the cart here)
+    window.location.href = 'checkout.html';
+  });
+// ...existing code...
+
+  renderCart();
+</script>
+
+</body>
+</html>
