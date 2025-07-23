@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <title>Cafetano | Sign Up</title>
   <style>
@@ -137,7 +138,7 @@
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
       errorMsg.style.display = 'none';
       successMsg.style.display = 'none';
@@ -170,25 +171,34 @@
         return;
       }
 
-      // Simulate account creation (store in localStorage for demo)
-      let users = JSON.parse(localStorage.getItem('cafetanoUsers') || '[]');
-      if (users.some(u => u.email === email.value.trim())) {
-        showError('An account with this email already exists.');
-        email.focus();
-        return;
-      }
-      users.push({
-        fullname: fullname.value.trim(),
-        email: email.value.trim(),
-        password: password.value // In real apps, never store plain passwords!
-      });
-      localStorage.setItem('cafetanoUsers', JSON.stringify(users));
+      try{
+        const res = await fetch('http://localhost:3000/signup', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            fullname: fullname.value.trim(),
+            email: email.value.trim(),
+            password: password.value
+          })
+        });
 
-      successMsg.textContent = 'Account created! Redirecting to login...';
-      successMsg.style.display = 'block';
-      setTimeout(() => {
-        window.location.href = 'login.html';
-      }, 1200);
+        const data = await res.json();
+
+        if(!res.ok){
+          showError(data.error || 'Something went wrong');
+          return;
+        }
+
+        successMsg.textContent = data.message + 'Redirecting to login...';
+        successMsg.style.display = 'block';
+
+        setTimeout(() => {
+          window.location.href = 'login.html';
+
+        }, 1200);
+      }catch (err){
+        showError('Server error. Please try again later.');
+      }
     });
 
     function showError(msg) {
