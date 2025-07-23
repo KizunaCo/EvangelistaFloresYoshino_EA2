@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cafetano | Checkout</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+
+      body {
+        background: linear-gradient(135deg, #fdf6f0 60%, #f5e1d4 100%);
+        font-family: "Montserrat", "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 2rem;
+        color: #3e2723;
+        min-height: 100vh;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        color: #3e2723;
+        letter-spacing: 2px;
+        text-align: center;
+        text-shadow: 0 2px 8px #e0cfc2;
+      }
+
+      .order-summary {
+        background: linear-gradient(135deg, #fff 80%, #f5e1d4 100%);
+        padding: 2rem 2vw 2.5rem 2vw;
+        border-radius: 22px;
+        max-width: 800px;
+        margin: 0 auto;
+        box-shadow: 0 6px 32px 0 rgba(62, 39, 35, 0.09);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 2rem;
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px 0 rgba(62, 39, 35, 0.08);
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #f5e1d4;
+        padding: 1rem 1.2rem;
+        text-align: left;
+        font-size: 1.05rem;
+      }
+
+      th {
+        background: linear-gradient(90deg, #fff3e0 60%, #f5e1d4 100%);
+        font-size: 1.08rem;
+        font-weight: 700;
+        color: #3e2723;
+        letter-spacing: 1px;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      .total-row td {
+        font-weight: 800;
+        font-size: 1.15rem;
+        background: #fff3e0;
+        color: #3e2723;
+        border-bottom: none;
+        letter-spacing: 1px;
+      }
+
+      .thank-you {
+        text-align: center;
+        font-size: 1.3rem;
+        margin-top: 2rem;
+        color: #5d4037;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      .center-btn {
+        text-align: center;
+        margin-top: 2.5rem;
+      }
+
+      .back-btn {
+        display: inline-block;
+        padding: 0.8rem 2.2rem;
+        background: linear-gradient(90deg, #3e2723 70%, #a1887f 100%);
+        color: white;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.08rem;
+        box-shadow: 0 2px 8px #e0cfc2;
+        transition: background 0.2s, box-shadow 0.2s;
+        border: none;
+        outline: none;
+        letter-spacing: 1px;
+      }
+
+      .back-btn:hover {
+        background: linear-gradient(90deg, #5d4037 70%, #d7ccc8 100%);
+        color: #fffde7;
+        box-shadow: 0 4px 16px #d7ccc8;
+      }
+
+      @media (max-width: 900px) {
+        .order-summary {
+          padding: 1.2rem 1vw 1.5rem 1vw;
+        }
+
+        table th,
+        table td {
+          padding: 0.7rem 0.5rem;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.4rem;
+        }
+
+        .order-summary {
+          padding: 1rem 0.5rem 1.2rem 0.5rem;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        table {
+          border-radius: 10px;
+          box-shadow: none;
+        }
+
+        thead tr {
+          display: none;
+        }
+
+        tr {
+          margin-bottom: 1.2rem;
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px #e0cfc2;
+          padding: 0.7rem;
+        }
+
+        td {
+          border: none;
+          padding: 0.7rem 0.5rem;
+          position: relative;
+          font-size: 1rem;
+        }
+
+        td:before {
+          content: attr(data-label);
+          font-weight: 700;
+          color: #a1887f;
+          display: block;
+          margin-bottom: 0.2rem;
+          font-size: 0.95rem;
+        }
+
+        .total-row td {
+          font-size: 1.05rem;
+          padding: 0.7rem 0.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Checkout Summary</h1>
+
+    <div class="order-summary">
+      <table id="checkout-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Hot/Cold</th>
+            <th>Size</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Filled by JS -->
+        </tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="5">Total</td>
+            <td id="checkout-total">₱0</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="thank-you">
+        Thank you for your order! Your food is being prepared 🍽️
+      </div>
+
+      <div class="center-btn">
+        <button id="confirm-order" class="back-btn">Confirm Order</button>
+        <a href="menu.html" class="back-btn">Back to Menu</a>
+      </div>
+    </div>
+
+    <script>
+      const checkoutTableBody = document.querySelector("#checkout-table tbody");
+      const totalElem = document.getElementById("checkout-total");
+      const thankYouMessage = document.querySelector(".thank-you");
+      const confirmBtn = document.getElementById("confirm-order");
+      let cart = [];
+
+      async function loadLatestOrder() {
+        const user = JSON.parse(localStorage.getItem("cafetanoLoggedIn"));
+        if (!user || !user.email) {
+          alert("Please log in to view your order.");
+          return;
+        }
+
+        try {
+          const res = await fetch(
+            `/api/order/latest?email=${encodeURIComponent(user.email)}`
+          );
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data.error || "Failed to load order");
+            return;
+          }
+
+          console.log("🧾 Latest order from server:", data.cart);
+          cart = data.cart || [];
+          renderCheckout();
+        } catch (err) {
+          console.error("❌ Error fetching latest order:", err);
+        }
+      }
+
+      function renderCheckout() {
+        checkoutTableBody.innerHTML = "";
+        let total = 0;
+
+        if (cart.length === 0) {
+          checkoutTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center;">No items in your order.</td></tr>`;
+          totalElem.textContent = "₱0.00";
+          return;
+        }
+
+        cart.forEach((item) => {
+          const subtotal = item.price * item.quantity;
+          total += subtotal;
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.hotcold || ""}</td>
+        <td>${item.size}</td>
+        <td>${item.quantity}</td>
+        <td>₱${item.price.toFixed(2)}</td>
+        <td>₱${subtotal.toFixed(2)}</td>
+      `;
+          checkoutTableBody.appendChild(tr);
+        });
+
+        totalElem.textContent = `₱${total.toFixed(2)}`;
+      }
+
+      // Disable confirmation button if needed
+      confirmBtn.style.display = "none";
+      thankYouMessage.style.display = "block";
+
+      loadLatestOrder();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cafetano | Cart</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+
+      body {
+        background: linear-gradient(135deg, #fdf6f0 60%, #f5e1d4 100%);
+        font-family: "Montserrat", "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 1.5rem;
+        color: #3e2723;
+        min-height: 100vh;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 16px 0 rgba(62, 39, 35, 0.07);
+        border-bottom-left-radius: 32px;
+        border-bottom-right-radius: 32px;
+        padding: 2rem 3vw 1.2rem 3vw;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #3e2723;
+        letter-spacing: 2px;
+        margin: 0;
+        text-shadow: 0 2px 8px #e0cfc2;
+      }
+
+      a.back-link {
+        text-decoration: none;
+        color: #3e2723;
+        background: linear-gradient(90deg, #fff3e0 60%, #f5e1d4 100%);
+        padding: 0.6rem 1.3rem;
+        border-radius: 12px;
+        border: 1.5px solid #d7ccc8;
+        font-weight: 700;
+        font-size: 1.08rem;
+        box-shadow: 0 2px 8px #f5e1d4;
+        transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      }
+
+      a.back-link:hover {
+        background: linear-gradient(90deg, #f5e1d4 60%, #fff3e0 100%);
+        color: #5d4037;
+        box-shadow: 0 4px 16px #d7ccc8;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 2rem;
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px 0 rgba(62, 39, 35, 0.08);
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #f5e1d4;
+        padding: 1rem 1.2rem;
+        text-align: left;
+        font-size: 1.05rem;
+      }
+
+      th {
+        background: linear-gradient(90deg, #fff3e0 60%, #f5e1d4 100%);
+        font-size: 1.08rem;
+        font-weight: 700;
+        color: #3e2723;
+        letter-spacing: 1px;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      td.quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      button.qty-btn {
+        background: linear-gradient(90deg, #3e2723 70%, #a1887f 100%);
+        color: white;
+        border: none;
+        padding: 0.3rem 0.7rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.1rem;
+        user-select: none;
+        transition: background 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px #e0cfc2;
+      }
+
+      button.qty-btn:hover {
+        background: linear-gradient(90deg, #5d4037 70%, #d7ccc8 100%);
+        color: #fffde7;
+        box-shadow: 0 4px 16px #d7ccc8;
+      }
+
+      button.qty-btn[style*="background:#b71c1c;"] {
+        background: linear-gradient(
+          90deg,
+          #b71c1c 70%,
+          #f5e1d4 100%
+        ) !important;
+        color: #fff;
+      }
+
+      button.qty-btn[style*="background:#b71c1c;"]:hover {
+        background: linear-gradient(
+          90deg,
+          #d32f2f 70%,
+          #f5e1d4 100%
+        ) !important;
+      }
+
+      select.size-select {
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 1.5px solid #d7ccc8;
+        font-size: 1.05rem;
+        width: 120px;
+        background: #fdf6f0;
+        color: #3e2723;
+        font-weight: 600;
+        outline: none;
+        transition: border 0.2s;
+      }
+
+      select.size-select:focus {
+        border: 1.5px solid #a1887f;
+      }
+
+      .total-row td {
+        font-weight: 800;
+        font-size: 1.15rem;
+        background: #fff3e0;
+        color: #3e2723;
+        border-bottom: none;
+        letter-spacing: 1px;
+      }
+
+      button.checkout-btn {
+        background: linear-gradient(90deg, #3e2723 70%, #a1887f 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2.5rem;
+        border-radius: 14px;
+        cursor: pointer;
+        font-size: 1.15rem;
+        font-weight: 800;
+        transition: background 0.3s, box-shadow 0.2s;
+        float: right;
+        box-shadow: 0 2px 8px #e0cfc2;
+        margin-top: 1.2rem;
+        letter-spacing: 1px;
+      }
+
+      button.checkout-btn:hover {
+        background: linear-gradient(90deg, #5d4037 70%, #d7ccc8 100%);
+        color: #fffde7;
+        box-shadow: 0 4px 16px #d7ccc8;
+      }
+
+      .empty-msg {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-top: 3rem;
+        color: #777;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      @media (max-width: 900px) {
+        header {
+          padding: 1.2rem 2vw 1.2rem 2vw;
+        }
+
+        table th,
+        table td {
+          padding: 0.7rem 0.5rem;
+        }
+
+        button.checkout-btn {
+          padding: 0.8rem 1.2rem;
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 600px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 1rem 2vw 1rem 2vw;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        table {
+          border-radius: 10px;
+          box-shadow: none;
+        }
+
+        thead tr {
+          display: none;
+        }
+
+        tr {
+          margin-bottom: 1.2rem;
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px #e0cfc2;
+          padding: 0.7rem;
+        }
+
+        td {
+          border: none;
+          padding: 0.7rem 0.5rem;
+          position: relative;
+          font-size: 1rem;
+        }
+
+        td:before {
+          content: attr(data-label);
+          font-weight: 700;
+          color: #a1887f;
+          display: block;
+          margin-bottom: 0.2rem;
+          font-size: 0.95rem;
+        }
+
+        .total-row td {
+          font-size: 1.05rem;
+          padding: 0.7rem 0.5rem;
+        }
+
+        button.checkout-btn {
+          width: 100%;
+          float: none;
+          margin-top: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Your Cart</h1>
+      <a href="menu.html" class="back-link">← Back to Menu</a>
+    </header>
+
+    <table id="cart-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Size</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Cart items inserted here -->
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="4">Total</td>
+          <td id="total-price">₱0.00</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div id="empty-cart" class="empty-msg" style="display: none">
+      Your cart is empty.
+    </div>
+
+    <button class="checkout-btn" id="checkout-btn" style="display: none">
+      Checkout
+    </button>
+
+    <script>
+      let cart = [];
+      const loggedInUser = JSON.parse(localStorage.getItem("cafetanoLoggedIn"));
+      const userEmail = loggedInUser?.email;
+
+      const cartTableBody = document.querySelector("#cart-table tbody");
+      const totalPriceElem = document.getElementById("total-price");
+      const emptyMsg = document.getElementById("empty-cart");
+      const checkoutBtn = document.getElementById("checkout-btn");
+
+      // Load cart from server
+      async function loadCart() {
+        if (!userEmail) return;
+
+        try {
+          const res = await fetch(
+            `http://localhost:3000/api/cart/load?email=${userEmail}`
+          );
+          const data = await res.json();
+          cart = data.cart || [];
+          renderCart();
+        } catch (err) {
+          console.error("Failed to load cart:", err);
+        }
+      }
+
+      // Save cart to server
+      async function saveCart() {
+        if (!userEmail) return;
+
+        try {
+          await fetch("http://localhost:3000/api/cart/save", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: userEmail, cart }),
+          });
+        } catch (err) {
+          console.error("Failed to save cart:", err);
+        }
+      }
+
+      function renderCart() {
+        cartTableBody.innerHTML = "";
+
+        if (cart.length === 0) {
+          document.querySelector("table").style.display = "none";
+          emptyMsg.style.display = "block";
+          checkoutBtn.style.display = "none";
+          totalPriceElem.textContent = "₱0.00";
+          return;
+        }
+
+        document.querySelector("table").style.display = "table";
+        emptyMsg.style.display = "none";
+        checkoutBtn.style.display = "inline-block";
+
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          const subtotal = item.price * item.quantity;
+          total += subtotal;
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+        <td data-label="Item">${item.name}${
+            item.hotcold
+              ? `<br><span style='font-size:0.95em;color:#a1887f;font-weight:600;'>${item.hotcold}</span>`
+              : ""
+          }</td>
+        <td data-label="Size">
+          <select class="size-select" onchange="changeSize(${index}, this.value)">
+            ${(item.availableSizes || item.sizes || [])
+              .map(
+                (sizeObj) =>
+                  `<option value="${sizeObj.size}" data-price="${
+                    sizeObj.price
+                  }" ${sizeObj.size === item.size ? "selected" : ""}>
+                ${sizeObj.size} - ₱${sizeObj.price.toFixed(2)}
+              </option>`
+              )
+              .join("")}
+          </select>
+        </td>
+        <td data-label="Price">₱${item.price.toFixed(2)}</td>
+        <td data-label="Quantity" class="quantity-controls">
+          <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+          <span>${item.quantity}</span>
+          <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+        </td>
+        <td data-label="Subtotal">₱${subtotal.toFixed(2)}</td>
+        <td data-label="Remove"><button class="qty-btn" style="background:#b71c1c;" onclick="removeItem(${index})">×</button></td>
+      `;
+          cartTableBody.appendChild(tr);
+        });
+
+        totalPriceElem.textContent = `₱${total.toFixed(2)}`;
+      }
+
+      function changeQty(index, delta) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity < 1) cart[index].quantity = 1;
+        saveCart();
+        renderCart();
+      }
+
+      function removeItem(index) {
+        cart.splice(index, 1);
+        saveCart();
+        renderCart();
+      }
+
+      function changeSize(index, newSize) {
+        const item = cart[index];
+        const sizeObj = item.availableSizes.find((s) => s.size === newSize);
+        if (sizeObj) {
+          item.size = sizeObj.size;
+          item.price = sizeObj.price;
+          saveCart();
+          renderCart();
+        }
+      }
+
+      checkoutBtn.addEventListener("click", async () => {
+        try {
+          const res = await fetch("http://localhost:3000/api/order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: userEmail, cart }),
+          });
+
+          const result = await res.json();
+
+          if (res.ok) {
+            // ✅ Clone cart for checkout BEFORE emptying it
+            const cartCopy = JSON.parse(JSON.stringify(cart));
+            localStorage.setItem("cafetanoCart", JSON.stringify(cartCopy));
+
+            // ✅ Clear cart only after setting the copy
+            cart = [];
+            await saveCart();
+
+            window.location.href = "checkout.html";
+          } else {
+            alert(result.error || "Failed to place order");
+          }
+        } catch (err) {
+          alert("Server error. Try again later.");
+        }
+      });
+      document.addEventListener("DOMContentLoaded", loadCart);
+    </script>
+  </body>
+</html>

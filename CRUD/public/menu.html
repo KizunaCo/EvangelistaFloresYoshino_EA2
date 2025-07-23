@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cafetano | Menu</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+
+      body {
+        background: linear-gradient(135deg, #fdf6f0 60%, #f5e1d4 100%);
+        font-family: "Montserrat", "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 0 2rem 0;
+        padding: 2rem 3vw 0 3vw;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 16px 0 rgba(62, 39, 35, 0.07);
+        border-bottom-left-radius: 32px;
+        border-bottom-right-radius: 32px;
+      }
+
+      h1 {
+        color: #3e2723;
+        font-size: 2.4rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin: 0;
+        text-shadow: 0 2px 8px #e0cfc2;
+      }
+
+      .cart-icon {
+        text-decoration: none;
+        background: linear-gradient(90deg, #3e2723 60%, #a1887f 100%);
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px #e0cfc2;
+        margin-left: 0.5rem;
+        transition: background 0.2s, box-shadow 0.2s;
+        border: none;
+        outline: none;
+        display: inline-block;
+      }
+
+      .cart-icon:hover {
+        background: linear-gradient(90deg, #5d4037 60%, #d7ccc8 100%);
+        box-shadow: 0 4px 16px #d7ccc8;
+        color: #fffde7;
+      }
+
+      #user-greeting {
+        font-weight: 600;
+        color: #3e2723;
+        font-size: 1.08rem;
+        letter-spacing: 0.5px;
+        vertical-align: middle;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 1.2rem;
+        margin: 2rem 0 2.5rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .tab-button {
+        padding: 0.7rem 2.2rem;
+        background: #fff;
+        border: 2px solid #d7ccc8;
+        border-radius: 14px;
+        cursor: pointer;
+        color: #3e2723;
+        font-weight: 700;
+        font-size: 1.08rem;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 8px #f5e1d4;
+        transition: 0.2s;
+        outline: none;
+      }
+
+      .tab-button.active,
+      .tab-button:hover {
+        background: linear-gradient(90deg, #3e2723 70%, #a1887f 100%);
+        color: #fffde7;
+        border-color: #3e2723;
+        box-shadow: 0 4px 16px #d7ccc8;
+        transform: translateY(-2px) scale(1.04);
+      }
+
+      .menu-section {
+        display: none;
+        animation: fadeIn 0.7s;
+      }
+
+      .menu-section.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2.2rem;
+        padding: 0 3vw 2vw 3vw;
+      }
+
+      .menu-card {
+        background: linear-gradient(135deg, #fff 80%, #f5e1d4 100%);
+        border-radius: 22px;
+        padding: 1.3rem 1.2rem 1.2rem 1.2rem;
+        box-shadow: 0 6px 32px 0 rgba(62, 39, 35, 0.09);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1.5px solid #f5e1d4;
+        transition: box-shadow 0.2s, transform 0.2s;
+        min-height: 420px;
+        position: relative;
+      }
+
+      .menu-card:hover {
+        box-shadow: 0 12px 32px 0 #e0cfc2;
+        transform: translateY(-4px) scale(1.025);
+        border-color: #a1887f;
+      }
+
+      .menu-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 14px;
+        margin-bottom: 1.1rem;
+        box-shadow: 0 2px 12px #e0cfc2;
+        background: #f5e1d4;
+      }
+
+      .menu-card h3 {
+        color: #3e2723;
+        margin: 0.5rem 0 0.3rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .menu-card p {
+        font-size: 1.01rem;
+        color: #6d4c41;
+        flex-grow: 1;
+        margin-bottom: 0.7rem;
+        margin-top: 0.2rem;
+        font-weight: 500;
+      }
+
+      .size-select {
+        margin: 0.8rem 0 0.5rem 0;
+      }
+
+      .hotcold-select {
+        margin-bottom: 0.7rem;
+        font-size: 1.01rem;
+        color: #6d4c41;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+
+      .hotcold-select label {
+        cursor: pointer;
+        user-select: none;
+        padding: 0.2rem 0.6rem;
+        border-radius: 8px;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .hotcold-select input[type="radio"] {
+        accent-color: #a1887f;
+        margin-right: 0.3em;
+        vertical-align: middle;
+      }
+
+      .hotcold-select input[type="radio"]:checked + span {
+        color: #fff;
+        background: #a1887f;
+      }
+
+      select.size-select {
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 1.5px solid #d7ccc8;
+        width: 100%;
+        font-size: 1.05rem;
+        background: #fdf6f0;
+        color: #3e2723;
+        font-weight: 600;
+        outline: none;
+        transition: border 0.2s;
+      }
+
+      select.size-select:focus {
+        border: 1.5px solid #a1887f;
+      }
+
+      button {
+        background: linear-gradient(90deg, #3e2723 70%, #a1887f 100%);
+        color: white;
+        border: none;
+        padding: 0.8rem 0;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1.08rem;
+        font-weight: 700;
+        margin-top: 0.7rem;
+        box-shadow: 0 2px 8px #e0cfc2;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+        letter-spacing: 1px;
+      }
+
+      button:hover {
+        background: linear-gradient(90deg, #5d4037 70%, #d7ccc8 100%);
+        box-shadow: 0 4px 16px #d7ccc8;
+        color: #fffde7;
+        transform: scale(1.04);
+      }
+
+      .price-label {
+        margin: 0.5rem 0 0.8rem 0;
+        font-weight: 700;
+        color: #3e2723;
+        font-size: 1.09rem;
+        letter-spacing: 0.5px;
+      }
+
+      @media (max-width: 900px) {
+        .menu-grid {
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 1.2rem;
+          padding: 0 1vw 2vw 1vw;
+        }
+
+        header {
+          padding: 1.2rem 2vw 0 2vw;
+        }
+      }
+
+      @media (max-width: 600px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 1rem 2vw 0 2vw;
+        }
+
+        .tabs {
+          gap: 0.5rem;
+          margin: 1.2rem 0 1.5rem 0;
+        }
+
+        .menu-card {
+          min-height: 340px;
+          padding: 1rem 0.7rem 1rem 0.7rem;
+        }
+
+        .menu-card img {
+          height: 110px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ...existing HTML content... -->
+
+    <header>
+      <h1>Cafetano Menu</h1>
+      <div id="header-actions">
+        <a class="cart-icon" href="cart.html">🛒 Cart</a>
+        <span id="user-greeting" style="margin-left: 0.7rem"></span>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button
+        class="tab-button active"
+        data-tab="coffee"
+        onclick="showTab('coffee')"
+      >
+        Coffee
+      </button>
+      <button
+        class="tab-button"
+        data-tab="noncoffee"
+        onclick="showTab('noncoffee')"
+      >
+        Non-Coffee Drinks
+      </button>
+      <button
+        class="tab-button"
+        data-tab="colddrinks"
+        onclick="showTab('colddrinks')"
+      >
+        Cold Drinks
+      </button>
+      <button
+        class="tab-button"
+        data-tab="pastries"
+        onclick="showTab('pastries')"
+      >
+        Pastries
+      </button>
+      <button class="tab-button" data-tab="meals" onclick="showTab('meals')">
+        Meals
+      </button>
+    </div>
+
+    <!-- 🔁 Dynamic content goes here -->
+    <div id="menu-container"></div>
+
+    <script>
+      const tabs = document.querySelectorAll(".tab-button");
+
+      function showTab(tabName) {
+        document.querySelectorAll(".menu-section").forEach((section) => {
+          section.classList.toggle("active", section.id === tabName);
+        });
+        tabs.forEach((tab) => {
+          tab.classList.toggle("active", tab.dataset.tab === tabName);
+        });
+      }
+
+      function getCart() {
+        return JSON.parse(localStorage.getItem("cafetanoCart")) || [];
+      }
+
+      function saveCart(cart) {
+        localStorage.setItem("cafetanoCart", JSON.stringify(cart));
+
+        let user = null;
+        try {
+          user = JSON.parse(localStorage.getItem("cafetanoLoggedIn"));
+        } catch (e) {
+          console.warn("⚠️ Could not parse user login data");
+        }
+
+        if (!user || !user.email) {
+          console.warn(
+            "❌ No logged-in user found — skipping server cart save"
+          );
+          return;
+        }
+
+        const payload = {
+          email: user.email.trim().toLowerCase,
+          cart: cart,
+        };
+
+        console.log("🛒 Saving to server:", payload); // <- This is critical
+
+        fetch("/api/cart/save", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("✅ Server response:", data);
+          })
+          .catch((err) => {
+            console.error("❌ Add to cart failed:", err);
+            alert("Server error. Item not saved.");
+          });
+      }
+
+      let cart = window.currentCart || [];
+      async function addToCart(button) {
+        const card = button.closest(".menu-card");
+        const name = card.querySelector("h3").textContent.trim();
+        const sizeSelect = card.querySelector("select.size-select");
+
+        let hotcold = null;
+        const hotcoldRadio = card.querySelector(
+          '.hotcold-select input[type="radio"]:checked'
+        );
+        if (hotcoldRadio) hotcold = hotcoldRadio.value;
+
+        let size, price;
+        if (sizeSelect) {
+          size = sizeSelect.value;
+          price = parseFloat(
+            sizeSelect.selectedOptions[0].text.match(/₱(\d+)/)[1]
+          );
+        } else {
+          size = "Regular";
+          price = parseFloat(card.dataset.price) || 0;
+        }
+
+        let availableSizes = [];
+        if (sizeSelect) {
+          for (let option of sizeSelect.options) {
+            const s = option.value;
+            const priceMatch = option.textContent.match(/₱(\d+(\.\d+)?)/);
+            const p = priceMatch ? parseFloat(priceMatch[1]) : 0;
+            availableSizes.push({ size: s, price: p });
+          }
+        } else {
+          availableSizes = [{ size, price }];
+        }
+
+        const user = JSON.parse(localStorage.getItem("cafetanoLoggedIn"));
+        if (!user || !user.email) {
+          alert("Please log in to save your cart.");
+          return;
+        }
+
+        // ✅ Use in-memory synced cart
+        let cart = window.currentCart || [];
+
+        const existingIndex = cart.findIndex(
+          (item) =>
+            item.name === name &&
+            item.size === size &&
+            (item.hotcold === hotcold || (!item.hotcold && !hotcold))
+        );
+
+        if (existingIndex !== -1) {
+          cart[existingIndex].quantity += 1;
+        } else {
+          cart.push({
+            name,
+            hotcold,
+            size,
+            price,
+            quantity: 1,
+            availableSizes,
+          });
+        }
+
+        window.currentCart = cart; // Update session memory
+
+        const payload = { email: user.email, cart };
+        console.log("🛒 Saving to server:", payload);
+
+        try {
+          const res = await fetch("/api/cart/save", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) throw new Error("Failed to save to server");
+
+          const result = await res.json();
+          console.log("✅ Server response:", result);
+          alert(
+            `${hotcold ? hotcold + " " : ""}${name} (${size}) added to cart!`
+          );
+        } catch (err) {
+          console.error("Add to cart failed:", err);
+          alert("Server error. Item not saved.");
+        }
+      }
+
+      function attachAddToCartListeners() {
+        document.querySelectorAll(".menu-card button").forEach((button) => {
+          button.addEventListener("click", () => addToCart(button));
+        });
+      }
+
+      function updateUserGreeting() {
+        const userGreeting = document.getElementById("user-greeting");
+        let loggedIn = null;
+        try {
+          loggedIn = JSON.parse(localStorage.getItem("cafetanoLoggedIn"));
+        } catch {}
+        if (loggedIn && loggedIn.fullname) {
+          userGreeting.innerHTML = `
+        👤 ${loggedIn.fullname}
+        <a href="#" id="logout-link" style="margin-left:1rem;color:#b71c1c;text-decoration:underline;cursor:pointer;">Logout</a>
+      `;
+          document.getElementById("logout-link").onclick = function () {
+            localStorage.removeItem("cafetanoLoggedIn");
+            window.location.href = "login.html";
+          };
+        } else {
+          userGreeting.innerHTML = `<a class="cart-icon" href="login.html">Login</a>`;
+        }
+      }
+
+      async function fetchAndRenderMenu() {
+        try {
+          const res = await fetch("/menu");
+          const data = await res.json();
+          const menuContainer = document.getElementById("menu-container");
+
+          // 🧹 Clear previous render
+          menuContainer.innerHTML = "";
+
+          const categories = {};
+
+          // Group items by category
+          data.forEach((item) => {
+            if (!categories[item.category]) categories[item.category] = [];
+            categories[item.category].push(item);
+          });
+
+          // Render sections dynamically
+          Object.keys(categories).forEach((cat) => {
+            const section = document.createElement("section");
+            section.id = cat.toLowerCase().replace(/\s+/g, "");
+            section.classList.add("menu-section");
+            if (cat.toLowerCase() === "coffee") section.classList.add("active");
+
+            const grid = document.createElement("div");
+            grid.classList.add("menu-grid");
+
+            categories[cat].forEach((item) => {
+              const card = document.createElement("div");
+              card.classList.add("menu-card");
+
+              const img = `<img src="${item.image}" alt="${item.name}" onerror="this.src='fallback.jpg'" />`;
+              const title = `<h3>${item.name}</h3>`;
+              const desc = `<p>${item.description}</p>`;
+
+              let hotcoldHTML = "";
+              if (item.hotcold?.length) {
+                hotcoldHTML =
+                  `<div class="hotcold-select">` +
+                  item.hotcold
+                    .map(
+                      (opt, i) =>
+                        `<label><input type="radio" name="hotcold-${
+                          item._id
+                        }" value="${opt}" ${
+                          i === 0 ? "checked" : ""
+                        }><span>${opt}</span></label>`
+                    )
+                    .join(" ") +
+                  `</div>`;
+              }
+
+              let sizeHTML = "";
+              if (item.sizes?.length) {
+                sizeHTML =
+                  `<div class="size-select">
+            <select class="size-select">` +
+                  item.sizes
+                    .map(
+                      (s) =>
+                        `<option value="${s.size}">${s.size} - ₱${s.price}</option>`
+                    )
+                    .join("") +
+                  `</select></div>`;
+              } else {
+                card.dataset.price = item.price || 0;
+                sizeHTML = `<div class="price-label">₱${item.price}</div>`;
+              }
+
+              const button = `<button>Add to Cart</button>`;
+
+              card.innerHTML =
+                img + title + desc + hotcoldHTML + sizeHTML + button;
+              grid.appendChild(card);
+            });
+
+            section.appendChild(grid);
+            menuContainer.appendChild(section);
+          });
+
+          attachAddToCartListeners();
+        } catch (err) {
+          console.error("Error loading menu:", err);
+        }
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const user = JSON.parse(localStorage.getItem("cafetanoLoggedIn"));
+        if (!user || !user.email) return;
+
+        try {
+          const res = await fetch(
+            `/api/cart/load?email=${encodeURIComponent(user.email)}`
+          );
+          const data = await res.json();
+          window.currentCart = data.cart || [];
+          console.log("🛒 Loaded cart from server:", window.currentCart);
+        } catch (err) {
+          console.error("Error loading cart from server:", err);
+          window.currentCart = []; // fallback to empty cart
+        }
+        updateUserGreeting();
+        fetchAndRenderMenu();
+      });
+    </script>
+  </body>
+</html>
